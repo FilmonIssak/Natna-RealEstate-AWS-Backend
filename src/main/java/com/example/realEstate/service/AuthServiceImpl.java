@@ -36,21 +36,30 @@ public class AuthServiceImpl implements AuthService {
     private final RoleRepository roleRepository;
     private final EmailService emailService;
 
+//    @Override
+//    public LoginResponse login(LoginRequest loginRequest) {
+//        Authentication result = null;
+//        try {
+//            result = authenticationManager.authenticate(
+//                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
+//            );
+//        } catch (BadCredentialsException e) {
+//            throw new BadCredentialsException(e.getMessage());
+//        }
+//
+//        final UserDetails userDetails = userDetailsService.loadUserByUsername(result.getName());
+//        final String accessToken = jwtUtil.generateToken(userDetails);
+//        final String refreshToken = jwtUtil.generateRefreshToken(loginRequest.getEmail());
+//        User user = userRepository.findByEmail(loginRequest.getEmail());
+//        var loginResponse = new LoginResponse(accessToken, refreshToken, user.getFirstName(), user.getId(), user.getRole().getRole(), user.getStatus());
+//        return loginResponse;
+//    }
+
     @Override
     public LoginResponse login(LoginRequest loginRequest) {
-        Authentication result = null;
-        try {
-            result = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
-            );
-        } catch (BadCredentialsException e) {
-            throw new BadCredentialsException(e.getMessage());
-        }
-
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(result.getName());
-        final String accessToken = jwtUtil.generateToken(userDetails);
-        final String refreshToken = jwtUtil.generateRefreshToken(loginRequest.getEmail());
         User user = userRepository.findByEmail(loginRequest.getEmail());
+        final String accessToken = jwtUtil.generateToken(new MyUserDetails(user));
+        final String refreshToken = jwtUtil.generateRefreshToken(loginRequest.getEmail());
         var loginResponse = new LoginResponse(accessToken, refreshToken, user.getFirstName(), user.getId(), user.getRole().getRole(), user.getStatus());
         return loginResponse;
     }

@@ -2,12 +2,12 @@ spring:
   application:
     name: realestate-backend
   datasource:
-    password: 1
-    url: jdbc:postgresql://localhost:5432/realstate
+    password: postgres
+    url: jdbc:postgresql://natnarealstatedb2.cju3aeix2ino.us-east-1.rds.amazonaws.com/natnarealstatedb
     username: postgres
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -18,5 +18,21 @@ spring:
   sql:
     init:
       mode: always
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
 server:
   port: 8080
+
+AWS_REGION: us-east-1
+AWS_ACCESS_KEY_ID: AKIA6DUNLHBZQZS6JRWN
+AWS_SECRET_ACCESS_KEY: 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
+AWS_QUEUE: https://sqs.us-east-1.amazonaws.com/969885300851/natnaMailingQueue
+
+
+
+
+
+
+

@@ -8,4 +8,16 @@ import lombok.Data;
 public class LoginRequest {
     private String email;
     private String password;
+
+    @Override
+    public String toString() {
+        return "{\"username\":\"" + email + "\", \"password\":\"" + password + "\"}";
+    }
+
+//    @Override
+//    public String toString() {
+//        return "{" +
+//                "email: \"" + email + "\", " +
+//                "password: \"" + password + "\"}";
+//    }
 }
